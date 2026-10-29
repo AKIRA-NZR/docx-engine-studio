@@ -20,7 +20,7 @@ from docx_engine import (
     docx_to_pdf,
     pdf_to_docx
 )
-from configs.mare_alerta_sprint4 import RECIPE_SPRINT_4
+from configs.exemplo_relatorio import RECIPE_EXEMPLO
 
 TEMPLATE_FILE = "Modelo_Relatorio_de_Evolucao_de_Front-End.docx"
 
@@ -47,7 +47,7 @@ def test_filling_and_validation_approval():
     with tempfile.TemporaryDirectory() as tmpdir:
         out_docx = Path(tmpdir) / "teste_preenchido.docx"
         editor = DocumentEditor(TEMPLATE_FILE)
-        editor.apply_recipe(RECIPE_SPRINT_4)
+        editor.apply_recipe(RECIPE_EXEMPLO)
         saved = editor.save(str(out_docx))
         assert Path(saved).exists()
 
@@ -63,7 +63,7 @@ def test_grid_table_border_cloning():
     with tempfile.TemporaryDirectory() as tmpdir:
         out_docx = Path(tmpdir) / "teste_bordas.docx"
         editor = DocumentEditor(TEMPLATE_FILE)
-        editor.apply_recipe(RECIPE_SPRINT_4)
+        editor.apply_recipe(RECIPE_EXEMPLO)
         editor.save(str(out_docx))
 
         doc = docx.Document(str(out_docx))

@@ -19,7 +19,7 @@ except ImportError:
     BaseApp = ctk.Tk
 
 from docx_engine import DocumentEditor, pdf_to_docx, docx_to_pdf
-from configs.mare_alerta_sprint4 import RECIPE_SPRINT_4
+from configs.exemplo_relatorio import RECIPE_EXEMPLO
 
 
 class DocxEngineStudio(BaseApp):
@@ -114,9 +114,9 @@ class DocxEngineStudio(BaseApp):
 
         self.combo_recipe = ctk.CTkComboBox(
             tab,
-            values=["Sprint 4 — Maré Alerta (Padrão)"]
+            values=["Relatório de Exemplo (Padrão)"]
         )
-        self.combo_recipe.set("Sprint 4 — Maré Alerta (Padrão)")
+        self.combo_recipe.set("Relatório de Exemplo (Padrão)")
         self.combo_recipe.grid(row=2, column=1, padx=10, pady=8, sticky="ew")
 
         # Linha 4: Opções Adicionais
@@ -297,7 +297,7 @@ class DocxEngineStudio(BaseApp):
 
         try:
             editor = DocumentEditor(model_path)
-            editor.apply_recipe(RECIPE_SPRINT_4)
+            editor.apply_recipe(RECIPE_EXEMPLO)
 
             # Auditoria prévia se ativada
             if self.check_validate.get():

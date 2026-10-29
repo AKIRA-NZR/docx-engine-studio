@@ -4,7 +4,7 @@ Mantém compatibilidade com a execução direta: `python arquivo.py`.
 """
 
 from docx_engine import DocumentEditor
-from configs.mare_alerta_sprint4 import RECIPE_SPRINT_4
+from configs.exemplo_relatorio import RECIPE_EXEMPLO
 
 def main():
     template = "Modelo_Relatorio_de_Evolucao_de_Front-End.docx"
@@ -14,7 +14,7 @@ def main():
     editor = DocumentEditor(template)
     
     # Aplica a receita declarativa completa (tabelas, textos, checkboxes e formatação)
-    editor.apply_recipe(RECIPE_SPRINT_4)
+    editor.apply_recipe(RECIPE_EXEMPLO)
     
     # Salva com proteção contra travamento por arquivos abertos no LibreOffice/Word
     editor.save(output)

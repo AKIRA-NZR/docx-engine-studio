@@ -8,17 +8,17 @@ import sys
 from pathlib import Path
 
 from docx_engine import DocumentEditor
-from configs.mare_alerta_sprint4 import RECIPE_SPRINT_4
+from configs.exemplo_relatorio import RECIPE_EXEMPLO
 
 
 def run_default():
-    """Execução padrão do relatório Maré Alerta utilizando a nova arquitetura."""
+    """Execução padrão do relatório de exemplo utilizando a arquitetura."""
     template_file = "Modelo_Relatorio_de_Evolucao_de_Front-End.docx"
     output_file = "Relatorio_de_Evolucao_de_Front-End_Preenchido.docx"
 
     print("Iniciando motor de transformação de documentos DOCX...")
     editor = DocumentEditor(template_file)
-    editor.apply_recipe(RECIPE_SPRINT_4)
+    editor.apply_recipe(RECIPE_EXEMPLO)
     saved_path = editor.save(output_file)
     print(f"Sucesso! Relatório gerado em: {saved_path}")
 
@@ -45,7 +45,7 @@ def main():
         editor.inspect()
     elif args.command == "run":
         editor = DocumentEditor(args.template)
-        editor.apply_recipe(RECIPE_SPRINT_4)
+        editor.apply_recipe(RECIPE_EXEMPLO)
         editor.save(args.output)
     else:
         # Sem argumentos: executa o fluxo padrão
