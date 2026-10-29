@@ -38,3 +38,5 @@ htmlcov/
 *_novo.docx
 *_temp.docx
 test_*.docx
+
+*.log
