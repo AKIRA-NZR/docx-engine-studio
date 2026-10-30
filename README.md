@@ -1,6 +1,6 @@
 # DOCX Engine Studio — Automação e Conversão de Documentos
 
-Motor modular em Python para automação de modificações, preenchimento, auditoria e conversão bidirecional (PDF $\leftrightarrow$ DOCX) de qualquer documento Word (`.docx`).
+Motor modular em Python com **Frontend Web em React + TypeScript** e **Interface Desktop** para automação de modificações, preenchimento, auditoria de conformidade e conversão bidirecional (PDF $\leftrightarrow$ DOCX) de qualquer documento Word (`.docx`).
 
 ---
 
@@ -24,13 +24,12 @@ O objetivo principal do **DOCX Engine Studio** é receber qualquer documento e a
    - **PDF $\rightarrow$ DOCX**: Converte arquivos PDF em documentos Word totalmente editáveis via `pdf2docx`.
    - **DOCX $\rightarrow$ PDF**: Exportação direta para PDF com fallback para LibreOffice headless.
 
-4. **Interface Gráfica Desktop Moderna (`app_gui.py`)**:
-   - Interface em Dark Mode nativa construída com `customtkinter`.
-   - Abas dedicadas para:
-     - 📄 Preenchimento e auditoria de documentos.
-     - 🔄 Conversão de PDF para DOCX e vice-versa.
-     - 🔍 Inspeção estrutural de modelos desconhecidos.
-   - Inicializador de 2 cliques para Windows (`Abrir_Studio.bat`).
+4. **Frontend Web Moderno (`frontend/` — React 19 + TypeScript + Vite)**:
+   - Dashboard em Dark Mode conectado à API FastAPI (`api_server.py`).
+   - Editor JSON interativo de receitas declarativas, upload de modelos `.docx`, relatórios visuais de auditoria e download instantâneo de `.docx` e `.pdf`.
+
+5. **Interface Gráfica Desktop (`app_gui.py`)**:
+   - Interface nativa construída com `customtkinter`.
 
 ---
 
@@ -39,7 +38,17 @@ O objetivo principal do **DOCX Engine Studio** é receber qualquer documento e a
 ```text
 trabalhos/
 │
-├── docx_engine/                # 🚀 Motor reutilizável para qualquer documento
+├── frontend/                   # 🌐 Aplicação Web React 19 + TypeScript + Vite
+│   ├── src/
+│   │   ├── App.tsx            # Dashboard com 4 abas (Automação, Validador, Conversor, Inspetor)
+│   │   ├── App.css            # Design system em Dark Mode
+│   │   ├── types.ts           # Contratos TypeScript da API
+│   │   └── main.tsx           # Ponto de entrada React
+│   ├── package.json
+│   ├── tsconfig.json
+│   └── vite.config.ts         # Proxy configurado para http://127.0.0.1:8000
+│
+├── docx_engine/                # 🚀 Motor Python reutilizável para qualquer documento
 │   ├── __init__.py            # Exporta DocumentEditor, Validator e Conversores
 │   ├── editor.py              # Fachada central (carga, salvamento seguro e receitas)
 │   ├── table_handler.py       # Busca semântica e preenchimento com clonagem de bordas
@@ -54,63 +63,34 @@ trabalhos/
 ├── tests/                     # 🧪 Testes automatizados (pytest)
 │   └── test_docx_engine.py
 │
-├── app_gui.py                 # 🖥️ Interface Gráfica Desktop Moderna
-├── Abrir_Studio.bat           # ⚡ Atalho de inicialização rápida no Windows
+├── api_server.py              # ⚡ Servidor REST FastAPI para o Frontend React
+├── Iniciar_Web.bat            # 🌐 Atalho de 2 cliques para abrir a versão Web
+├── app_gui.py                 # 🖥️ Interface Gráfica Desktop Nativa
+├── Abrir_Studio.bat           # ⚡ Atalho de 2 cliques para a interface Desktop
 ├── main.py                    # 💻 CLI para execução e inspeção
-├── arquivo.py                 # 🔄 Script de compatibilidade
-├── requirements.txt           # 📦 Dependências do projeto
+├── requirements.txt           # 📦 Dependências Python
 └── README.md                  # 📖 Este documento
 ```
 
 ---
 
-## 📦 Instalação
+## 🚀 Como Executar o Frontend Web (React + FastAPI)
 
-```bash
-pip install -r requirements.txt
-```
+### Opção Rápida (1 Clique no Windows)
+Dê dois cliques em **`Iniciar_Web.bat`** — ele inicia o servidor em `http://127.0.0.1:8000` e abre o navegador automaticamente.
 
----
-
-## 🖥️ Como Usar
-
-### 1. Pela Interface Gráfica Desktop (Recomendado)
-Execute no terminal:
-```bash
-python app_gui.py
-```
-*Ou dê dois cliques no arquivo `Abrir_Studio.bat` no Windows Explorer.*
-
-### 2. Pela Linha de Comando (CLI)
-- **Preencher o relatório padrão de exemplo:**
-  ```bash
-  python main.py
-  ```
-- **Inspecionar qualquer modelo DOCX desconhecido:**
-  ```bash
-  python main.py inspect SeuModelo.docx
-  ```
-
-### 3. Programaticamente no Python
-```python
-from docx_engine import DocumentEditor, pdf_to_docx, docx_to_pdf
-
-# 1. Carregar e preencher qualquer modelo
-editor = DocumentEditor("MeuModelo.docx")
-editor.replace_text("TEXTO_ANTIGO", "TEXTO_NOVO")
-editor.check_option("Opções:", "Concluído")
-editor.save("Resultado.docx")
-
-# 2. Auditar documento
-report = editor.validate()
-print(report.summary())
-
-# 3. Exportar para PDF
-editor.export_pdf("Resultado.docx", "Resultado.pdf")
-
-# 4. Converter PDF para Word editável
-docx_editavel = pdf_to_docx("Documento.pdf")
-```
+### Opção em Modo de Desenvolvimento (Vite Hot Reload)
+1. **Terminal 1 (Backend FastAPI):**
+   ```bash
+   python api_server.py
+   ```
+2. **Terminal 2 (Frontend React + TypeScript):**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+   Acesse **`http://localhost:5173`**.
 
 ---
 
